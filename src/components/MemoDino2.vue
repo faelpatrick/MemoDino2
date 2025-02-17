@@ -42,8 +42,11 @@
         <span v-if="difficulty === 'hard'"> / 16</span> -->
       </h3>
     </div>
+<!-- icone de som para play/pause do audio wild-hunter.mp3 -->
 
-    <GameBoard v-if="Cards" :Cards="Cards" @flip="handleFlip" :difficulty="difficulty"/>
+    <v-icon class="pl-4 pt-4" color="#ededed" @click="toggleAudio" :class="isPlaying ? 'mdi-volume-high' : 'mdi-volume-off'">Vol</v-icon>
+
+  <GameBoard v-if="Cards" :Cards="Cards" @flip="handleFlip" :difficulty="difficulty"/>
 </div>
 
 <v-dialog
@@ -75,7 +78,7 @@
 </template>
 
 <script setup>
-import { onMounted, ref } from 'vue';
+import { onMounted, onUnmounted, ref } from 'vue';
 import game from './game.js';
 import GameBoard from './GameBoard.vue';
 // import UserConfig from './UserConfig.vue';
@@ -89,6 +92,24 @@ const geralScore = ref({});
 
 const GameOver = ref(false);
 const Cards = ref([]);
+
+const isPlaying = ref(false);
+let audio = null;
+
+
+
+const toggleAudio = () => {
+  if (!audio) return;
+
+  if (isPlaying.value) {
+    audio.pause();
+  } else {
+    audio.play().catch((error) => {
+      console.log("Reprodução bloqueada pelo navegador:", error);
+    });
+  }
+  isPlaying.value = !isPlaying.value;
+};
 
 const loadMemoDino2Data = async () => {
   MemoDino2Data.value = JSON.parse(localStorage.getItem('MemoDino2Data') || '{}');
@@ -166,8 +187,20 @@ function handleFlip(card) {
 }
 
 onMounted(() => {
+  audio = new Audio(new URL('../assets/sons/wild-hunter.mp3', import.meta.url));
+  audio.loop = true;
+  audio.volume = 0.2; // Ajuste o volume inicial para evitar bloqueio
+
   loadMemoDino2Data();
   startGame();
+});
+
+
+onUnmounted(() => {
+  if (audio) {
+    audio.pause();
+    audio = null;
+  }
 });
 
 </script>

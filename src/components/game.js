@@ -99,13 +99,15 @@ let game = {
 	},
 
 	eggCracking: function () {
-		let egg = new Audio('assets/sons/egg-cracking.mp3');
+		let urlAudio = new URL('../assets/sons/egg-cracking.mp3', import.meta.url);
+		let egg = new Audio(urlAudio);
 		egg.playbackRate = 2;
 		egg.play();
 	},
 
 	roarMatch: function () {
-		let roar = new Audio('assets/sons/dino-roar.mp3');
+		let urlAudio = new URL('../assets/sons/dino-roar.mp3', import.meta.url);
+		let roar = new Audio(urlAudio);
 		roar.play();
 	},
 
