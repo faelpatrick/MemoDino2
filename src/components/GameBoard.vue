@@ -158,8 +158,8 @@ box-sizing: border-box;
   }
 
   .game-card {
-    width: 100px;
-    height: 100px;
+    width: 90px;
+    height: 90px;
   }
   
  }
