@@ -10,6 +10,7 @@
           v-model="difficulty"
           :items="[{ title: 'Fácil', value: 'easy' }, { title: 'Médio', value: 'medium' }, { title: 'Difícil', value: 'hard' }]"
           outlined
+          density="compact"
           style="width: 150px;"
           hide-details
           @update:model-value="changeLevel()"
@@ -233,6 +234,8 @@ onMounted(() => {
     max-width: 100vw;
     flex-wrap: wrap;
   }
-  
+  #MemoDino2 #nav-container h2{
+    font-size: .9rem;
+  }
 }
 </style>
