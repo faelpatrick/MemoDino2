@@ -2,7 +2,7 @@
   <div id="MemoDino2">
 
     <div id="nav-container">
-      <h2 @click="GameOver=true">🦕 Memo Dino 2</h2>
+      <h2 @click="()=> gameOver()">🦕 Memo Dino 2</h2>
       <div class="d-flex flex-row justify-between align-center">
         <h2>Nível: </h2>
         <!-- lista para trocar dificuldade -->
@@ -140,21 +140,17 @@ const changeLevel = () => {
 
 const gameOver = () => {
 const dataSave = { name: username.value, difficulty: difficulty.value, score: score.value };
-  MemoDino2Data.value.geralScore = {
+ let novoPlacar = {
     ...MemoDino2Data.value.geralScore,
     [new Date().toISOString()]: dataSave,
   }
+  geralScore.value = Object.values(novoPlacar).sort((a, b) => b.score - a.score);
+  MemoDino2Data.value.geralScore = novoPlacar;
+
   saveMemoDino2Data();
   GameOver.value = true;
   game.clearCards();
 }
-
-const updateTurns = () => {
-Cards.value = game.cards.map((card) => ({
-  ...card,
-  flipped: card.flipped || card.matched,
-}));
-};
 
 function handleFlip(card) {
   game.flipCard(card.id, () => {
