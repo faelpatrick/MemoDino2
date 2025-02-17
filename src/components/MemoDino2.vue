@@ -50,7 +50,7 @@
   fullscreen
   hide-overlay
   >
-  <v-container style="background-color: #0008;" class="game-over">
+  <div style="background-color: #0008;" class="game-over">
 
     <h1>Game Over!</h1>
     <h2>Erros: {{ score }}</h2>
@@ -58,7 +58,7 @@
     <div class="placar-gameover">
 
       <h3 class="text-center">Placar</h3>
-      <table >
+      <table v-if="geralScore">
         <tr v-for="(score, date) in geralScore" :key="date">
           <td>{{ score.name }}        </td>
           <td>{{ new Date(date).toLocaleString() }}</td>     
@@ -69,7 +69,7 @@
     </div>
     <v-btn size="x-large" class="btn-jogardenovo" color="green" @click="restart()">Jogar de novo!</v-btn>
 
-  </v-container>
+  </div>
 </v-dialog>
 </template>
 
@@ -103,11 +103,6 @@ const saveMemoDino2Data = () => {
   localStorage.setItem('MemoDino2Data', JSON.stringify(MemoDino2Data.value));
 };
 
-const updateScore = (newScore) => {
-  score.value = newScore;
-  saveMemoDino2Data();
-};
-
 const updateName = (newName) => {
   username.value = newName;
   MemoDino2Data.value.username = newName;
@@ -133,15 +128,14 @@ const restart = () => {
   game.clearCards();
   game.setDifficulty(difficulty.value);
   GameOver.value = false;
+  score.value = 0;
   Cards.value = game.createCardsFromTechs();
 }
 
 const changeLevel = () => {
-  console.log('difficulty', difficulty.value);
   MemoDino2Data.value.difficulty = difficulty.value;
-  console.log('MemoDino2Data', MemoDino2Data.value);
-saveMemoDino2Data();
-restart();
+  saveMemoDino2Data();
+  restart();
 };
 
 const gameOver = () => {
