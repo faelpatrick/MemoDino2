@@ -3,11 +3,11 @@
     <div v-for="(card, index) in props.Cards" :key="index" >
         <div
           class="game-card"
-          :class="{ flip: card.flipped }"
+          :class="['game-card', { flip: card.flipped, special: card.flipped && Number(card.icon) >= 17 }]"
           @click="flipCard(card, index)"
         >
           <v-card-text class="card_front" v-if="card.flipped">
-            <img class="w-75" :src="getImageSrc(card.icon)" alt="">
+            <img :class="`w-75`" :src="getImageSrc(card.icon)"  alt="">
           </v-card-text>
           <v-card-text class="card_back" v-else>
             &#129370;
@@ -167,4 +167,38 @@ box-sizing: border-box;
   
  }
 
+.special {
+            background: linear-gradient(45deg, rgba(255, 215, 0, 0.2), rgba(173, 216, 230, 0.2), rgba(255, 0, 0, 0.2));
+            background-size: 400% 400%;
+            border-radius: 20px;
+            border: 4px solid rgba(255, 255, 255, 0.3);
+            /* overflow: hidden; */
+            position: relative;
+            animation: holographic 5s infinite linear;
+            box-shadow: 0px 0px 15px rgba(255, 255, 255, 0.5);
+        }
+
+        .special::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(60deg, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.05));
+            mix-blend-mode: overlay;
+            animation: shimmer 3s infinite linear;
+        }
+
+        @keyframes holographic {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        @keyframes shimmer {
+            0% { opacity: 0.5; transform: scale(1); }
+            50% { opacity: 0.8; transform: scale(1.02); }
+            100% { opacity: 0.5; transform: scale(1); }
+        }
 </style>

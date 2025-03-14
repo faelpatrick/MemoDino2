@@ -123,13 +123,15 @@ let game = {
 	flipCard: function (cardId, gameOverCallback, noMatchCallback) {
 
 		if (!this.setCard(cardId)) return;
-		if (this.firstCard.icon && Number(this.firstCard.icon) >= 17) {
+		if ((this.firstCard.icon && Number(this.firstCard.icon) >= 17) && !this.secondCard) {
 			this.specialSound();
-		} else {
+		} else if (!this.second){
 			this.eggCracking();
 		}
 
 		if (this.secondCard) {
+			
+			(this.secondCard && this.secondCard.icon && Number(this.secondCard.icon) >= 17) ? this.specialSound() : this.eggCracking();
 			if (this.checkMatch()) {
 				this.roarMatch();
 				this.clearCards();
