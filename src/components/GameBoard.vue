@@ -60,6 +60,9 @@ function getImageSrc(icon) {
 .grid-hard {
   grid-template-columns: repeat(8, auto);
 }
+.grid-veryhard {
+  grid-template-columns: repeat(10, auto);
+}
 
 .game-card {
   width: 150px;

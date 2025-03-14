@@ -8,7 +8,8 @@ let game = {
 		const difficulties = {
 			easy: 6,
 			medium: 10,
-			hard: 16
+			hard: 16,
+			veryhard: 20
 		};
 
 		this.difficulty = level;
@@ -57,7 +58,7 @@ let game = {
 		return this.cards.every(card => card.flipped);
 	},
 
-	techs: ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12', '13', '14', '15', '16'],
+	techs: ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20'],
 	cards: null,
 
 	createCardsFromTechs: function () {
@@ -105,21 +106,33 @@ let game = {
 		egg.play();
 	},
 
+	specialSound: function () {
+		let urlAudio = new URL('../assets/sons/Wand.mp3', import.meta.url);
+		let special = new Audio(urlAudio);
+		special.playbackRate = 2;
+		special.play();
+	},
+
 	roarMatch: function () {
 		let urlAudio = new URL('../assets/sons/dino-roar.mp3', import.meta.url);
 		let roar = new Audio(urlAudio);
 		roar.play();
 	},
 
+
 	flipCard: function (cardId, gameOverCallback, noMatchCallback) {
-		this.eggCracking();
 
 		if (!this.setCard(cardId)) return;
+		if (this.firstCard.icon && Number(this.firstCard.icon) >= 17) {
+			this.specialSound();
+		} else {
+			this.eggCracking();
+		}
 
 		if (this.secondCard) {
 			if (this.checkMatch()) {
-				this.clearCards();
 				this.roarMatch();
+				this.clearCards();
 				if (this.checkGameOver()) {
 					gameOverCallback();
 				}

@@ -8,7 +8,11 @@
         <!-- lista para trocar dificuldade -->
         <v-select
           v-model="difficulty"
-          :items="[{ title: 'Fácil', value: 'easy' }, { title: 'Médio', value: 'medium' }, { title: 'Difícil', value: 'hard' }]"
+          :items="[
+            { title: 'Fácil', value: 'easy' }, 
+            { title: 'Médio', value: 'medium' }, 
+            { title: 'Difícil', value: 'hard' }, 
+            { title: 'Muito Difícil', value: 'veryhard' }]"
           outlined
           density="compact"
           style="width: 150px;"
